@@ -44,7 +44,7 @@ class Library():
         self.members.append(Member(member_id, name, email))
         print(f"Member '{name}' registered successfully!")
         
-    def borrow(self, member_id, book_id):
+    def borrow_book(self, member_id, book_id):
         book = self.find_book(book_id)
         member = self.find_member(member_id)
         if member == None:
@@ -119,11 +119,11 @@ class Library():
         if not member:
             print("Error: Member not found!")
             return
-        print(f"\n=== Books borrowed by {member} ===")
-        if not member['borrowed_books']:
+        print(f"\n=== Books borrowed by {member.name} ===")
+        if not member.borrowed_books:
             print("No books currently borrowed")
         else:
             for book_id in member.borrowed_books:
                 book = self.find_book(book_id)
                 if book:
-                    print(f"- {book['title']} by {book['author']}")
+                    print(f"- {book.title} by {book.author}")
