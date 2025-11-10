@@ -1,0 +1,2 @@
+import library_oop
+library_oop.test_library_system()

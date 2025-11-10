@@ -7,12 +7,17 @@ class Book():
         self.total_copies = available_copies
         self.available_copies = available_copies
     
-    def borrow_book(self):
-        self.available_copies -= 1
-        
+    def borrow(self):
+        if self.available_copies > 0:
+            self.available_copies -= 1
+            return True
+        return False
+    
     def return_book(self):
-        self.available_copies += 1
-
+        if self.available_copies < self.total_copies:
+            self.available_copies += 1
+            return True
+        return False
 
 class Member():
     def __init__(self,member_id, name, email):
@@ -20,6 +25,12 @@ class Member():
         self.id = member_id
         self.email = email
         self.borrowed_books = []
+
+    def borrow_book(self, book):
+        if book.borrow():
+            self.borrowed_books.append(book)
+            return True
+        return False
 
     def return_book(self, book):
         if book.return_book:
@@ -32,7 +43,6 @@ class Library():
     def __init__(self):
         self.books = []
         self.members = []
-        self.borrowed_books = []
     
     def add_book(self, book_id, title, author, available_copies):
         book = self.find_book(book_id)
@@ -51,34 +61,21 @@ class Library():
     def borrow(self, member_id, book_id):
         book = self.find_book(book_id)
         member = self.find_member(member_id)
-        if member == None:
-            print("Error: Member not found!")
-            return False
         if book == None:
-            print("Error: Book not found!")
-            return False
-        if book.available_copies == 0:
-            print("Error: No copies available!")
-            return False
-        if len(member.borrowed_books) == 3:
-            print("Error: Member has reached borrowing limit!")
-            return False
-        book.borrow()
-        member.borrowed_books.append(book)
-        transaction = {
-            'member_id': member_id,
-            'book_id': book_id,
-            'member_name': member['name'],
-            'book_title': book['title']
-        }
-        self.borrowed_books.append(transaction)
-        print(f"{member['name']} borrowed '{book['title']}'")
-        return True
-
+            pass
+        if member == None:
+            pass
+        if member.borrow_book(book):
+            pass
+        else:
+            pass
+        
     def return_book(self, member_id, book_id):
         book = self.find_book(book_id)
         member = self.find_member(member_id)
-        if book == None or member == None:
+        if book == None:
+            pass
+        if member == None:
             pass
         if member.return_book(book):
             pass
