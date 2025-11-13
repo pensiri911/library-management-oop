@@ -1,0 +1,2 @@
+import library_procedura
+library_procedura.test_library_system()
